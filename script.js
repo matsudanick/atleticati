@@ -252,3 +252,23 @@ async function inscreverPalestra(idPalestra) {
         alert("Erro ao realizar inscrição.");
     }
 }
+document.querySelectorAll('#navbar a').forEach(link => {
+    link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+            const nav = document.getElementById('navbar');
+            
+            nav.style.display = 'none'; 
+            nav.classList.remove('active');
+        }
+    });
+});
+
+function toggleMenu() {
+    const nav = document.getElementById('navbar');
+    
+    if (nav.style.display === 'none' || nav.style.display === '') {
+        nav.style.display = 'flex'; // Abre o menu
+    } else {
+        nav.style.display = 'none'; // Fecha o menu
+    }
+}
