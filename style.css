@@ -25,7 +25,7 @@ body {
     user-select: none;         /* Padrão (Chrome, Opera, etc.) */
 }
 
-/* Reabilita a seleção e interação para botões, inputs e elementos clicáveis do seu layout */
+/* Reabilita a seleção e interação para botões, inputs e elementos clicáveis */
 button,
 input,
 .btn-neon,
@@ -136,7 +136,23 @@ nav a:hover { color: var(--neon-color); text-shadow: 0 0 8px var(--neon-color); 
 .event-details { flex: 1; text-align: left; }
 .small { font-size: 0.8rem; padding: 5px 15px; width: auto; }
 
-.cart-sidebar { position: fixed; top: 0; right: -350px; width: 320px; height: 100vh; background: #0f0f0f; border-left: 3px solid var(--neon-color); padding: 25px; z-index: 200; transition: 0.3s ease; display: flex; flex-direction: column; box-shadow: -5px 0 25px rgba(0,0,0,0.7); }
+/* AJUSTES DO CARRINHO - FIX IPHONE (dvh) */
+.cart-sidebar { 
+    position: fixed; 
+    top: 0; 
+    right: -400px; 
+    width: 320px; 
+    height: 100vh; 
+    height: 100dvh; 
+    background: #0f0f0f; 
+    border-left: 3px solid var(--neon-color); 
+    padding: 25px; 
+    z-index: 200; 
+    transition: 0.3s ease; 
+    display: flex; 
+    flex-direction: column; 
+    box-shadow: -5px 0 25px rgba(0,0,0,0.7); 
+}
 .cart-sidebar.open { right: 0; }
 .cart-header { display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; }
 .cart-items { flex: 1; overflow-y: auto; }
@@ -155,7 +171,16 @@ footer { text-align: center; padding: 30px; background: #020202; border-top: 1px
     nav ul { flex-direction: column; width: 100%; gap: 20px; }
     .hero-content h2 { font-size: 2.2rem; }
     .event-item { flex-direction: column; text-align: center; border-left: none; border-top: 5px solid var(--neon-color); }
-    .cart-sidebar { width: 100%; }
+    
+    /* FIX MOBILE: Carrinho 100% da tela */
+    .cart-sidebar { 
+        width: 100%; 
+        right: -100%; 
+    }
+    .cart-sidebar.open { 
+        right: 0; 
+    }
+    
     .row-inputs { flex-direction: column; gap: 0; }
     .row-inputs .input-group { width: 100%; margin-bottom: 0;}
     .row-inputs { margin-bottom: 15px; }
