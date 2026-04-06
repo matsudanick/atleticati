@@ -4,12 +4,14 @@
 const supabaseUrl = 'https://bsmrjrvsrxcxtcrfidnf.supabase.co';
 // ATENÇÃO: Cole aqui a sua chave "anon" / "public" que começa com "eyJ..."
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzbXJqcnZzcnhjeHRjcmZpZG5mIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTQyNjYzMywiZXhwIjoyMDkxMDAyNjMzfQ.ifbsK4t9XZs5l9lNH1M37q2UlO36seGJexYrQgvrAuc';
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+// CORREÇÃO AQUI: Mudamos o nome da variável de supabase para supabaseClient
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // =========================================================
 // 2. RECUPERAÇÃO DE SENHA (DETECÇÃO)
 // =========================================================
-supabase.auth.onAuthStateChange((event, session) => {
+supabaseClient.auth.onAuthStateChange((event, session) => {
     if (event === 'PASSWORD_RECOVERY') {
         document.getElementById('navbar').style.display = 'none';
         mudarAba('aba-nova-senha');
@@ -38,7 +40,7 @@ async function salvarNovaSenha(event) {
         return;
     }
 
-    const { data, error } = await supabase.auth.updateUser({ password: novaSenha });
+    const { data, error } = await supabaseClient.auth.updateUser({ password: novaSenha });
 
     if (error) {
         alert("Erro: " + error.message);
@@ -58,7 +60,7 @@ async function recuperarSenha() {
         return;
     }
 
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+    const { data, error } = await supabaseClient.auth.resetPasswordForEmail(email);
     if (error) {
         alert('Erro ao enviar e-mail: ' + error.message);
     } else {
@@ -234,7 +236,7 @@ async function handleRegister(event) {
     const sobrenome = document.getElementById('input-sobrenome').value;
     
     // Cadastra o usuário no Supabase
-    const { data, error } = await supabase.auth.signUp({
+    const { data, error } = await supabaseClient.auth.signUp({
         email: email,
         password: password,
         options: {
@@ -260,7 +262,7 @@ async function handleLogin(event) {
     const password = document.getElementById('input-pass-login').value;
 
     // Tenta fazer o login no Supabase
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
         email: email,
         password: password,
     });
@@ -278,7 +280,7 @@ async function handleLogin(event) {
 
 async function logout() {
     if(confirm("Deseja realmente sair da sua conta?")) {
-        const { error } = await supabase.auth.signOut();
+        const { error } = await supabaseClient.auth.signOut();
         
         if (error) {
             alert("Erro ao sair: " + error.message);
@@ -288,4 +290,4 @@ async function logout() {
             document.getElementById('btn-mobile-menu').style.display = 'none';
         }
     }
-}
+}s
