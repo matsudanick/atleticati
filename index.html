@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlética T.I. UMC - AAATI</title>
+    <title>Atlética T.I. UMC - Login</title>
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
-
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -20,27 +19,24 @@
             <h1>AAATI <span class="highlight">UMC</span></h1>
         </div>
         
-        <div class="menu-toggle" onclick="toggleMenu()">
+        <div class="menu-toggle" id="btn-mobile-menu" onclick="toggleMenu()" style="display: none;">
             <span class="material-icons">menu</span>
         </div>
 
-        <nav id="navbar">
+        <nav id="navbar" style="display: none;">
             <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#loja">Loja</a></li>
-                <li><a href="#esportes">Esportes</a></li>
-                <li><a href="#eventos">Eventos</a></li>
+                <li><a href="#" onclick="mudarAba('aba-novidades')">Início</a></li>
+                <li><a href="#" onclick="mudarAba('aba-loja')">Loja</a></li>
+                <li><a href="#" onclick="mudarAba('aba-e-sportes')">E-sportes</a></li>
+                <li><a href="#" onclick="mudarAba('aba-esportes')">Esportes</a></li>
+                <li><a href="#" onclick="mudarAba('aba-eventos')">Eventos</a></li>
                 
                 <li class="user-actions">
-                    <span id="user-display" style="display:none;">
+                    <span id="user-display">
                         Olá, <b id="username-span"></b>
                         <i class="material-icons logout-btn" onclick="logout()" title="Sair">logout</i>
                     </span>
                     
-                    <button class="icon-btn" onclick="openLogin()" id="login-btn">
-                        <span class="material-icons">account_circle</span>
-                    </button>
-
                     <button class="icon-btn cart-btn-container" onclick="toggleCart()">
                         <span class="material-icons">shopping_cart</span>
                         <span id="cart-count" class="cart-badge">0</span>
@@ -49,37 +45,6 @@
             </ul>
         </nav>
     </header>
-
-    <div id="login-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeLogin()">&times;</span>
-            
-            <h2 id="modal-title">Acesso <span class="highlight">Membro</span></h2>
-            <p id="modal-subtitle" class="modal-sub">Faça login para continuar</p>
-
-            <form id="auth-form" onsubmit="handleAuth(event)">
-                
-                <div id="extra-fields" style="display: none;">
-                    <div class="row-inputs">
-                        <input type="text" id="input-nome" placeholder="Nome">
-                        <input type="text" id="input-sobrenome" placeholder="Sobrenome">
-                    </div>
-                    <input type="text" id="input-phone" placeholder="WhatsApp / Celular">
-                    <input type="text" id="input-rgm" placeholder="RGM (Registro Geral de Matrícula)">
-                </div>
-
-                <input type="email" id="input-email" placeholder="Seu E-mail" required>
-                <input type="password" id="input-pass" placeholder="Senha (mín 6 dígitos)" required minlength="6">
-                
-                <button type="submit" class="btn-neon full-width" id="submit-btn">Entrar</button>
-            </form>
-            
-            <p class="switch-auth">
-                <span id="switch-text">Não tem conta?</span> 
-                <a onclick="toggleAuthMode()" id="switch-link">Cadastre-se</a>
-            </p>
-        </div>
-    </div>
 
     <div id="cart-sidebar" class="cart-sidebar">
         <div class="cart-header">
@@ -95,77 +60,151 @@
         </div>
     </div>
 
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h2>O Terror de Mogi é <span class="neon-text">ROXO</span></h2>
-            <p>Esportes, Tecnologia e Integração Universitária.</p>
-            <a href="#loja" class="btn-neon">Ver Produtos</a>
-        </div>
-    </section>
-
-    <section id="loja" class="container">
-        <h2 class="section-title">Nossa <span class="highlight">Loja</span></h2>
-        <div class="grid-shop">
-            <div class="card">
-                <div class="card-image placeholder-roxo">🍺</div>
-                <h3>Caneca + Tirante</h3>
-                <span class="price">R$ 45,00</span>
-                <button class="btn-buy" onclick="addToCart('Caneca + Tirante', 45.00)">Adicionar</button>
-            </div>
-            <div class="card">
-                <div class="card-image placeholder-roxo">👕</div>
-                <h3>Camiseta Oficial</h3>
-                <span class="price">R$ 60,00</span>
-                <button class="btn-buy" onclick="addToCart('Camiseta Oficial', 60.00)">Adicionar</button>
-            </div>
-            <div class="card">
-                <div class="card-image placeholder-roxo">🧥</div>
-                <h3>Moletom AAATI</h3>
-                <span class="price">R$ 180,00</span>
-                <button class="btn-buy" onclick="addToCart('Moletom AAATI', 180.00)">Adicionar</button>
-            </div>
-        </div>
-    </section>
-
-    <section id="esportes" class="container">
-        <h2 class="section-title">Nossas <span class="highlight">Seleções</span></h2>
-        <div class="sports-grid">
-            <div class="sport-card highlight-card">
-                <span class="material-icons sport-icon">sports_esports</span>
-                <h3>E-Sports</h3>
-                <p class="sport-desc">CS2, Valorant, LoL</p>
-                <div class="sport-info">
-                    <span><i class="material-icons">schedule</i> Online / Discord</span>
-                    <span><i class="material-icons">emoji_events</i> Liga Universitária</span>
+    <div id="aba-auth" class="secao-aba">
+        <div class="auth-master-bg">
+            <div class="auth-glass-card">
+                
+                <div class="auth-header">
+                    <img src="logoatletica.png" alt="Logo AAATI" class="auth-logo">
+                    <h2>AAATI <span class="highlight">UMC</span></h2>
+                    <p>Acesso restrito aos membros</p>
                 </div>
-                <button class="btn-neon">Entrar no Discord</button>
+
+                <form id="form-login" class="auth-form" onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <span class="material-icons">email</span>
+                        <input type="email" id="input-email-login" placeholder="E-mail Institucional" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <span class="material-icons">lock</span>
+                        <input type="password" id="input-pass-login" placeholder="Sua Senha" required>
+                    </div>
+
+                    <button type="submit" class="btn-neon full-width">Acessar Portal</button>
+                    <p class="forgot-pass" onclick="recuperarSenha()">Esqueceu a senha?</p>
+                </form>
+
+                <p class="switch-auth" style="margin-top: 25px;">
+                    Não tem conta? <a href="cadastro.html">Cadastre-se aqui</a>
+                </p>
+
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="eventos" class="bg-gradient">
-        <div class="container">
-            <h2 class="section-title">Próximos <span class="highlight">Eventos</span></h2>
-            <div class="events-container">
-                <div class="event-item">
-                    <div class="event-date">
-                        <span class="day">09</span>
-                        <span class="month">DEZ</span>
-                    </div>
-                    <div class="event-details">
-                        <h3>Palestra Back-End</h3>
-                        <p>Palestras com Haison Ohara.</p>
-                        <span class="location"><span class="material-icons">location_on</span> 1T-02</span>
-                    </div>
-                    <button class="btn-outline small">Inscrever</button>
+    <div id="aba-novidades" class="secao-aba" style="display: none;">
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2>O Terror de Mogi é <span class="neon-text">ROXO</span></h2>
+                <p>Esportes, Tecnologia e Integração Universitária.</p>
+                <a href="#" onclick="mudarAba('aba-loja')" class="btn-neon">Ver Produtos</a>
+            </div>
+        </section>
+
+        <section id="novidades" class="container">
+            <h2 class="section-title">Últimas <span class="highlight">Notícias</span></h2>
+            <div class="grid-shop">
+                <div class="card">
+                    <h3>Novo Manto 2026</h3>
+                    <p>O novo uniforme da atlética acaba de chegar na loja oficial! Garanta o seu antes que acabe.</p>
+                </div>
+                <div class="card">
+                    <h3>Treino de CS2</h3>
+                    <p>A seleção de E-Sports treina toda terça às 21h no Discord. Venha fazer parte do time.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+        <footer><p>&copy; 2026 AAATI Universidade de Mogi das Cruzes.</p></footer>
+    </div>
 
-    <footer>
-        <p>&copy; 2025 AAATI Universidade de Mogi das Cruzes.</p>
-    </footer>
+    <div id="aba-loja" class="secao-aba" style="display: none;">
+        <section id="loja" class="container">
+            <h2 class="section-title">Nossa <span class="highlight">Loja</span></h2>
+            <div class="grid-shop">
+                <div class="card">
+                    <div class="card-image placeholder-roxo">🍺</div>
+                    <h3>Caneca + Tirante</h3>
+                    <span class="price">R$ 45,00</span>
+                    <button class="btn-buy" onclick="addToCart('Caneca + Tirante', 45.00)">Adicionar</button>
+                </div>
+                <div class="card">
+                    <div class="card-image placeholder-roxo">👕</div>
+                    <h3>Camiseta Oficial</h3>
+                    <span class="price">R$ 60,00</span>
+                    <button class="btn-buy" onclick="addToCart('Camiseta Oficial', 60.00)">Adicionar</button>
+                </div>
+                <div class="card">
+                    <div class="card-image placeholder-roxo">🧥</div>
+                    <h3>Moletom AAATI</h3>
+                    <span class="price">R$ 180,00</span>
+                    <button class="btn-buy" onclick="addToCart('Moletom AAATI', 180.00)">Adicionar</button>
+                </div>
+            </div>
+        </section>
+        <footer><p>&copy; 2026 AAATI Universidade de Mogi das Cruzes.</p></footer>
+    </div>
+
+    <div id="aba-e-sportes" class="secao-aba" style="display: none;">
+        <section id="secao-e-sportes" class="container">
+            <h2 class="section-title">Nossas <span class="highlight">Seleções</span></h2>
+            <div class="sports-grid">
+                <div class="sport-card highlight-card">
+                    <span class="material-icons sport-icon">sports_esports</span>
+                    <h3>E-Sports</h3>
+                    <p class="sport-desc">CS2, Valorant, LoL</p>
+                    <div class="sport-info">
+                        <span><i class="material-icons">schedule</i> Online / Discord</span>
+                        <span><i class="material-icons">emoji_events</i> Liga Universitária</span>
+                    </div>
+                    <button class="btn-neon">Entrar no Discord</button>
+                </div>
+            </div>
+        </section>
+        <footer><p>&copy; 2026 AAATI Universidade de Mogi das Cruzes.</p></footer>
+    </div>
+
+    <div id="aba-esportes" class="secao-aba" style="display: none;">
+        <section id="secao-esportes" class="container">
+            <h2 class="section-title">Nossas <span class="highlight">Seleções</span></h2>
+            <div class="sports-grid">
+                <div class="sport-card highlight-card">
+                    <span class="material-icons sport-icon">sports_soccer</span>
+                    <h3>Esportes</h3>
+                    <p class="sport-desc">Vôlei, Futsal e Fut7</p>
+                    <div class="sport-info">
+                        <span><i class="material-icons">schedule</i> Treinos Semanais</span>
+                        <span><i class="material-icons">emoji_events</i> Jogos Universitários</span>
+                    </div>
+                    <button class="btn-neon">Participar da Seleção</button>
+                </div>
+            </div>
+        </section>
+        <footer><p>&copy; 2026 AAATI Universidade de Mogi das Cruzes.</p></footer>
+    </div>
+
+    <div id="aba-eventos" class="secao-aba" style="display: none;">
+        <section id="eventos" class="bg-gradient">
+            <div class="container">
+                <h2 class="section-title">Próximos <span class="highlight">Eventos</span></h2>
+                <div class="events-container">
+                    <div class="event-item">
+                        <div class="event-date">
+                            <span class="day">09</span>
+                            <span class="month">DEZ</span>
+                        </div>
+                        <div class="event-details">
+                            <h3>Palestra de Inteligência de Dados</h3>
+                            <p>Palestras com ---.</p>
+                            <span class="location"><span class="material-icons">location_on</span> Auditório UMC</span>
+                        </div>
+                        <button class="btn-neon small" onclick="inscreverPalestra('inteligencia_dados')">Inscrição </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer><p>&copy; 2026 AAATI Universidade de Mogi das Cruzes.</p></footer>
+    </div>
 
     <script src="script.js"></script>
 </body>

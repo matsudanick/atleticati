@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - AAATI UMC</title>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="auth-master-bg">
+        <div class="auth-glass-card">
+            
+            <div class="auth-header">
+                <img src="logoatletica.png" alt="Logo AAATI" class="auth-logo">
+                <h2>Novo <span class="highlight">Sócio</span></h2>
+                <p>Preencha seus dados para acessar o portal</p>
+            </div>
+
+            <form id="form-register" class="auth-form" onsubmit="handleRegister(event)">
+                <div class="row-inputs">
+                    <div class="input-group">
+                        <span class="material-icons">person</span>
+                        <input type="text" id="input-nome" placeholder="Nome" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="input-sobrenome" placeholder="Sobrenome" required>
+                    </div>
+                </div>
+
+                <div class="row-inputs">
+                    <div class="input-group">
+                        <span class="material-icons">badge</span>
+                        <input type="text" id="input-rgm" placeholder="RGM" required>
+                    </div>
+                    <div class="input-group">
+                        <span class="material-icons">smartphone</span>
+                        <input type="text" id="input-phone" placeholder="Celular" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <span class="material-icons">email</span>
+                    <input type="email" id="input-email-reg" placeholder="E-mail" required>
+                </div>
+                
+                <div class="input-group">
+                    <span class="material-icons">lock</span>
+                    <input type="password" id="input-pass-reg" placeholder="Crie uma Senha (mín 6)" required minlength="6">
+                </div>
+
+                <button type="submit" class="btn-neon full-width">Finalizar Cadastro</button>
+            </form>
+
+            <p class="switch-auth" style="margin-top: 20px;">
+                Já tem conta? <a href="index.html">Faça login aqui</a>
+            </p>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
