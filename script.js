@@ -2,13 +2,12 @@
 // 1. CONFIGURAÇÃO DO SUPABASE
 // =========================================================
 const supabaseUrl = 'https://bsmrjrvsrxcxtcrfidnf.supabase.co';
-const supabaseKey = 'sb_secret_NKxToRDxGqE0YSa2SbBZOQ_Lh48-C1C';
+const supabaseKey = 'sb_publishable_tgdyHdnslgHWviKTH3CVyQ_3HXFkSOY
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // =========================================================
 // 2. RECUPERAÇÃO DE SENHA (DETECÇÃO)
 // =========================================================
-// Verifica se o usuário chegou pelo link de redefinição de senha
 supabase.auth.onAuthStateChange((event, session) => {
     if (event === 'PASSWORD_RECOVERY') {
         document.getElementById('navbar').style.display = 'none';
@@ -74,7 +73,6 @@ function mudarAba(idAba) {
     abas.forEach(aba => aba.style.display = 'none');
     document.getElementById(idAba).style.display = 'block';
     
-    // Se saiu das telas de autenticação, mostra o menu e o toggle
     if(idAba !== 'aba-auth' && idAba !== 'aba-nova-senha') {
         document.getElementById('btn-mobile-menu').style.display = 'block';
         if (window.innerWidth > 768) {
@@ -94,7 +92,6 @@ function toggleMenu() {
     }
 }
 
-// Fecha o menu automaticamente no mobile ao clicar em um link
 document.querySelectorAll('#navbar a').forEach(link => {
     link.addEventListener('click', () => {
         if (window.innerWidth <= 768) {
@@ -172,6 +169,72 @@ function checkout() {
     });
     msg += `%0A*Total: R$ ${total.toFixed(2)}*`;
     
-    // Substitua pelo número do WhatsApp oficial
     window.open(`https://wa.me/5511999999999?text=${msg}`, '_blank');
+}
+
+// =========================================================
+// 5. PAINEL DE PERFIL (DASHBOARD)
+// =========================================================
+function switchProfileTab(tabId, btnElement) {
+    document.querySelectorAll('.profile-section').forEach(section => {
+        section.style.display = 'none';
+        section.classList.remove('active');
+    });
+
+    document.querySelectorAll('.profile-nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    const sectionToShow = document.getElementById(`perfil-${tabId}`);
+    sectionToShow.style.display = 'block';
+    sectionToShow.classList.add('secao-aba'); 
+    
+    btnElement.classList.add('active');
+}
+
+async function atualizarPerfil(event) {
+    event.preventDefault();
+
+    const nome = document.getElementById('perfil-nome').value;
+    const sobrenome = document.getElementById('perfil-sobrenome').value;
+
+    document.getElementById('username-span').innerText = nome;
+    document.getElementById('profile-name-display').innerText = nome + " " + sobrenome;
+
+    const btn = event.submitter;
+    const textoOriginal = btn.innerText;
+    btn.innerText = "Salvando...";
+    btn.style.opacity = "0.7";
+
+    setTimeout(() => {
+        btn.innerText = "Salvo com sucesso!";
+        btn.style.background = "#00e676";
+        btn.style.color = "#000";
+        btn.style.borderColor = "#00e676";
+        btn.style.boxShadow = "none";
+        
+        setTimeout(() => {
+            btn.innerText = textoOriginal;
+            btn.style = "";
+        }, 2000);
+    }, 1000);
+}
+
+// =========================================================
+// 6. FUNÇÕES BÁSICAS DE LOGIN E LOGOUT
+// =========================================================
+function handleLogin(event) {
+    event.preventDefault();
+    // Exemplo: Simulação simples. Implemente o Supabase real aqui depois.
+    alert("Login realizado com sucesso!");
+    mudarAba('aba-novidades');
+}
+
+function logout() {
+    if(confirm("Deseja realmente sair da sua conta?")) {
+        // Exemplo: supabase.auth.signOut();
+        mudarAba('aba-auth');
+        document.getElementById('navbar').style.display = 'none';
+        document.getElementById('btn-mobile-menu').style.display = 'none';
+    }
 }

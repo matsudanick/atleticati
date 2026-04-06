@@ -32,9 +32,9 @@
                 <li><a href="#" onclick="mudarAba('aba-eventos')">Eventos</a></li>
                 
                 <li class="user-actions">
-                    <span id="user-display">
-                        Olá, <b id="username-span">Sócio</b>
-                        <i class="material-icons logout-btn" onclick="logout()" title="Sair">logout</i>
+                    <span id="user-display" onclick="mudarAba('aba-perfil')" style="cursor: pointer; transition: 0.3s;" title="Acessar Meu Perfil">
+                        <span class="material-icons" style="vertical-align: middle; margin-right: 5px;">account_circle</span>
+                        <b id="username-span">Sócio</b>
                     </span>
                     
                     <button class="icon-btn cart-btn-container" onclick="toggleCart()">
@@ -223,12 +223,119 @@
                         </div>
                         <div class="event-details">
                             <h3>Palestra de Inteligência de Dados</h3>
-                            <p>Palestras com ---.</p>
+                            <p>Palestras com profissionais do mercado.</p>
                             <span class="location"><span class="material-icons">location_on</span> Auditório UMC</span>
                         </div>
                         <button class="btn-neon small" onclick="inscreverPalestra('inteligencia_dados')">Inscrição </button>
                     </div>
                 </div>
+            </div>
+        </section>
+        <footer><p>&copy; 2026 AAATI Universidade de Mogi das Cruzes.</p></footer>
+    </div>
+
+    <div id="aba-perfil" class="secao-aba" style="display: none;">
+        <section class="container" style="padding-top: 40px; text-align: left;">
+            <div class="profile-dashboard">
+                
+                <aside class="profile-sidebar card">
+                    <div class="profile-user-info">
+                        <div class="profile-avatar">
+                            <span class="material-icons">person</span>
+                        </div>
+                        <h3 id="profile-name-display">Ana Araújo</h3>
+                        <p class="neon-text" style="font-size: 0.8rem; font-weight: bold;">Membro Premium</p>
+                    </div>
+                    
+                    <nav class="profile-nav">
+                        <button class="profile-nav-btn active" onclick="switchProfileTab('dados', this)">
+                            <span class="material-icons">badge</span> Meus Dados
+                        </button>
+                        <button class="profile-nav-btn" onclick="switchProfileTab('pedidos', this)">
+                            <span class="material-icons">inventory_2</span> Meus Pedidos
+                        </button>
+                        <button class="profile-nav-btn" onclick="mudarAba('aba-nova-senha')">
+                            <span class="material-icons">key</span> Trocar Senha
+                        </button>
+                        <button class="profile-nav-btn btn-logout-nav" onclick="logout()">
+                            <span class="material-icons">logout</span> Sair da Conta
+                        </button>
+                    </nav>
+                </aside>
+
+                <main class="profile-content card">
+                    
+                    <div id="perfil-dados" class="profile-section active">
+                        <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 30px;">Meus <span class="highlight">Dados</span></h2>
+                        
+                        <form class="auth-form" onsubmit="atualizarPerfil(event)">
+                            <div class="row-inputs">
+                                <div class="input-group">
+                                    <span class="material-icons">person</span>
+                                    <input type="text" id="perfil-nome" placeholder="Nome" value="Ana" required>
+                                </div>
+                                <div class="input-group">
+                                    <span class="material-icons">person_outline</span>
+                                    <input type="text" id="perfil-sobrenome" placeholder="Sobrenome" value="Araújo" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row-inputs">
+                                <div class="input-group">
+                                    <span class="material-icons">badge</span>
+                                    <input type="text" id="perfil-rgm" placeholder="RGM" value="11223344" required>
+                                </div>
+                                <div class="input-group">
+                                    <span class="material-icons">smartphone</span>
+                                    <input type="tel" id="perfil-celular" placeholder="Celular" value="(11) 99999-9999" required>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group" style="opacity: 0.6; cursor: not-allowed;" title="O e-mail não pode ser alterado">
+                                <span class="material-icons">email</span>
+                                <input type="email" value="araujoanasoares36@gmail.com" disabled style="cursor: not-allowed;">
+                            </div>
+
+                            <button type="submit" class="btn-neon" style="margin-top: 15px;">Salvar Alterações</button>
+                        </form>
+                    </div>
+
+                    <div id="perfil-pedidos" class="profile-section" style="display: none;">
+                        <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 30px;">Meus <span class="highlight">Pedidos</span></h2>
+                        
+                        <div class="orders-list">
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <span class="order-id">#PED-0042</span>
+                                    <span class="order-status status-concluido">Entregue</span>
+                                </div>
+                                <div class="order-body">
+                                    <p><span class="material-icons" style="font-size: 1rem; vertical-align: middle;">checkroom</span> 1x Moletom AAATI (M)</p>
+                                    <p><span class="material-icons" style="font-size: 1rem; vertical-align: middle;">local_cafe</span> 1x Caneca + Tirante</p>
+                                </div>
+                                <div class="order-footer">
+                                    <span class="order-date">02 Abril 2026</span>
+                                    <span class="order-total">R$ 225,00</span>
+                                </div>
+                            </div>
+
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <span class="order-id">#PED-0089</span>
+                                    <span class="order-status status-pendente">Em Produção</span>
+                                </div>
+                                <div class="order-body">
+                                    <p><span class="material-icons" style="font-size: 1rem; vertical-align: middle;">checkroom</span> 1x Camiseta Oficial (G)</p>
+                                </div>
+                                <div class="order-footer">
+                                    <span class="order-date">06 Abril 2026</span>
+                                    <span class="order-total">R$ 60,00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </main>
             </div>
         </section>
         <footer><p>&copy; 2026 AAATI Universidade de Mogi das Cruzes.</p></footer>
