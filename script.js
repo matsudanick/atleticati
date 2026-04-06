@@ -2,7 +2,8 @@
 // 1. CONFIGURAÇÃO DO SUPABASE
 // =========================================================
 const supabaseUrl = 'https://bsmrjrvsrxcxtcrfidnf.supabase.co';
-const supabaseKey = 'sb_publishable_tgdyHdnslgHWviKTH3CVyQ_3HXFkSOY
+// ATENÇÃO: Cole aqui a sua chave "anon" / "public" que começa com "eyJ..."
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzbXJqcnZzcnhjeHRjcmZpZG5mIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTQyNjYzMywiZXhwIjoyMDkxMDAyNjMzfQ.ifbsK4t9XZs5l9lNH1M37q2UlO36seGJexYrQgvrAuc';
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // =========================================================
@@ -221,20 +222,70 @@ async function atualizarPerfil(event) {
 }
 
 // =========================================================
-// 6. FUNÇÕES BÁSICAS DE LOGIN E LOGOUT
+// 6. AUTENTICAÇÃO REAL (CADASTRO E LOGIN)
 // =========================================================
-function handleLogin(event) {
-    event.preventDefault();
-    // Exemplo: Simulação simples. Implemente o Supabase real aqui depois.
-    alert("Login realizado com sucesso!");
-    mudarAba('aba-novidades');
+
+async function handleRegister(event) {
+    event.preventDefault(); // Evita a página recarregar
+
+    const email = document.getElementById('input-email-reg').value;
+    const password = document.getElementById('input-pass-reg').value;
+    const nome = document.getElementById('input-nome').value;
+    const sobrenome = document.getElementById('input-sobrenome').value;
+    
+    // Cadastra o usuário no Supabase
+    const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+            data: {
+                first_name: nome,
+                last_name: sobrenome
+            }
+        }
+    });
+
+    if (error) {
+        alert("Erro ao cadastrar: " + error.message);
+    } else {
+        alert("Cadastro realizado! Faça login para acessar o portal.");
+        window.location.href = "index.html"; // Volta para a tela de login
+    }
 }
 
-function logout() {
+async function handleLogin(event) {
+    event.preventDefault(); // Evita a página recarregar
+
+    const email = document.getElementById('input-email-login').value;
+    const password = document.getElementById('input-pass-login').value;
+
+    // Tenta fazer o login no Supabase
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+    });
+
+    if (error) {
+        alert("Erro ao acessar: " + error.message);
+    } else {
+        // Atualiza o nome do usuário no menu com os dados reais do banco
+        const nomeUsuario = data.user.user_metadata?.first_name || "Sócio";
+        document.getElementById('username-span').innerText = nomeUsuario;
+        
+        mudarAba('aba-novidades');
+    }
+}
+
+async function logout() {
     if(confirm("Deseja realmente sair da sua conta?")) {
-        // Exemplo: supabase.auth.signOut();
-        mudarAba('aba-auth');
-        document.getElementById('navbar').style.display = 'none';
-        document.getElementById('btn-mobile-menu').style.display = 'none';
+        const { error } = await supabase.auth.signOut();
+        
+        if (error) {
+            alert("Erro ao sair: " + error.message);
+        } else {
+            mudarAba('aba-auth');
+            document.getElementById('navbar').style.display = 'none';
+            document.getElementById('btn-mobile-menu').style.display = 'none';
+        }
     }
 }
