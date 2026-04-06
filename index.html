@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Atlética T.I. UMC - Login</title>
+    <title>Atlética T.I. UMC - Portal</title>
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
@@ -33,7 +33,7 @@
                 
                 <li class="user-actions">
                     <span id="user-display">
-                        Olá, <b id="username-span"></b>
+                        Olá, <b id="username-span">Sócio</b>
                         <i class="material-icons logout-btn" onclick="logout()" title="Sair">logout</i>
                     </span>
                     
@@ -49,7 +49,7 @@
     <div id="cart-sidebar" class="cart-sidebar">
         <div class="cart-header">
             <h3>Seu Carrinho</h3>
-            <span class="material-icons close-btn" onclick="toggleCart()">close</span>
+            <span class="material-icons close-btn" onclick="toggleCart()" style="cursor: pointer;">close</span>
         </div>
         <div id="cart-items" class="cart-items">
             <p class="empty-msg">Seu carrinho está vazio.</p>
@@ -93,6 +93,34 @@
         </div>
     </div>
 
+    <div id="aba-nova-senha" class="secao-aba" style="display: none;">
+        <div class="auth-master-bg">
+            <div class="auth-glass-card">
+                
+                <div class="auth-header">
+                    <img src="logoatletica.png" alt="Logo AAATI" class="auth-logo">
+                    <h2>Criar <span class="highlight">Nova Senha</span></h2>
+                    <p>Digite a sua nova senha de acesso</p>
+                </div>
+
+                <form id="form-nova-senha" class="auth-form" onsubmit="salvarNovaSenha(event)">
+                    <div class="input-group">
+                        <span class="material-icons">lock</span>
+                        <input type="password" id="input-nova-senha" placeholder="Nova Senha (mín. 6)" required>
+                    </div>
+                    
+                    <div class="input-group">
+                        <span class="material-icons">lock_outline</span>
+                        <input type="password" id="input-confirma-senha" placeholder="Confirme a Nova Senha" required>
+                    </div>
+
+                    <button type="submit" class="btn-neon full-width">Atualizar Senha</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
     <div id="aba-novidades" class="secao-aba" style="display: none;">
         <section id="home" class="hero">
             <div class="hero-content">
@@ -123,19 +151,19 @@
             <h2 class="section-title">Nossa <span class="highlight">Loja</span></h2>
             <div class="grid-shop">
                 <div class="card">
-                    <div class="card-image placeholder-roxo">🍺</div>
+                    <div class="card-image placeholder-roxo" style="background-color: rgba(42, 10, 64, 0.5); height: 160px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 20px; border-radius: 10px; border: 1px dashed #555;">🍺</div>
                     <h3>Caneca + Tirante</h3>
                     <span class="price">R$ 45,00</span>
                     <button class="btn-buy" onclick="addToCart('Caneca + Tirante', 45.00)">Adicionar</button>
                 </div>
                 <div class="card">
-                    <div class="card-image placeholder-roxo">👕</div>
+                    <div class="card-image placeholder-roxo" style="background-color: rgba(42, 10, 64, 0.5); height: 160px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 20px; border-radius: 10px; border: 1px dashed #555;">👕</div>
                     <h3>Camiseta Oficial</h3>
                     <span class="price">R$ 60,00</span>
                     <button class="btn-buy" onclick="addToCart('Camiseta Oficial', 60.00)">Adicionar</button>
                 </div>
                 <div class="card">
-                    <div class="card-image placeholder-roxo">🧥</div>
+                    <div class="card-image placeholder-roxo" style="background-color: rgba(42, 10, 64, 0.5); height: 160px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 20px; border-radius: 10px; border: 1px dashed #555;">🧥</div>
                     <h3>Moletom AAATI</h3>
                     <span class="price">R$ 180,00</span>
                     <button class="btn-buy" onclick="addToCart('Moletom AAATI', 180.00)">Adicionar</button>
